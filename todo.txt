@@ -1,0 +1,3 @@
+Write tests.
+Determine upper bound of accuracy.
+Applet is not an applet!

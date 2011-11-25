@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML .96.e (Jan 04, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<!--Enhancements by Marcus Hennecke, Janne Saarela and Alex Lopez-Ortiz. Patch version 96.1 by Herb Sawn -->
+<HTML>
+<HEAD>
+<TITLE>How to compute digits of <I>pi </i>?</TITLE>
+<META NAME="description" CONTENT="How to compute digits of pi ?">
+<META NAME="keywords" CONTENT="math-faq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="math-faq.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html264" HREF="node13.html"><IMG ALIGN=BOTTOM ALT="next" SRC="http://usg.uwaterloo.ca/Icons/latex2html.95/icons/next_motif.gif"></A> <A NAME="tex2html262" HREF="node11.html"><IMG ALIGN=BOTTOM ALT="up" SRC="http://usg.uwaterloo.ca/Icons/latex2html.95/icons/up_motif.gif"></A> <A NAME="tex2html256" HREF="node11.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="http://usg.uwaterloo.ca/Icons/latex2html.95/icons/previous_motif.gif"></A> <A NAME="tex2html266" HREF="node1.html"><IMG ALIGN=BOTTOM ALT="contents" SRC="http://usg.uwaterloo.ca/Icons/latex2html.95/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html265" HREF="node13.html">Euler's formula: <I>e^(i pi) </A>
+<B>Up:</B> <A NAME="tex2html263" HREF="node11.html">Special Numbers and Functions</A>
+<B> Previous:</B> <A NAME="tex2html257" HREF="node11.html">Special Numbers and Functions</A>
+<BR> <P>
+<H1><A NAME="SECTION005100000000000000000">How to compute digits of <I>pi </i>?</A></H1>
+<P>
+    Symbolic Computation software such as <I>Maple</I> or <I>Mathematica</I>
+    can compute 10,000 digits of <I>pi </i> in a blink,
+    and another 20,000-1,000,000 digits overnight (range depends
+    on hardware platform).
+<P>
+    It is possible to retrieve 1.25+ million digits of <I>pi </i> via anonymous
+    ftp from the site wuarchive.wustl.edu, in the files pi.doc.Z and
+    pi.dat.Z which reside in subdirectory doc/misc/pi.
+    New York's Chudnovsky brothers have computed 2 billion digits of <I>pi </i>
+    on a homebrew computer.
+<P>
+This computations were made by Yasumasa Kanada, at the University of Tokyo.
+<P>
+    There are essentially 3 different methods to calculate <I>pi </i>
+ to many decimals.
+<P>
+<OL><LI> One of the oldest is to use the power series expansion of
+     <I>atan(x) = x - x^3/3 + x^5/5 - ...</i> together with formulas like
+     <I>pi = 16*atan(1/5) - 4*atan(1/239)</i>. This gives about 1.4 decimals per term.
+<P>
+     <LI> A second is to use formulas coming from Arithmetic-Geometric mean
+     computations. A beautiful compendium of such formulas is given in the
+     book <I>pi </i> and the AGM, (see references).
+      They have the advantage of converging
+     quadratically, i.e. you double the number of decimals per iteration.
+     For instance, to obtain 1 000 000 decimals, around 20 iterations are
+     sufficient. The disadvantage is that you need FFT type multiplication
+     to get a reasonable speed, and this is not so easy to program.
+<P>
+     <LI>
+     A third one comes from the theory of complex multiplication of elliptic
+     curves, and was discovered by S. Ramanujan. This gives a number of
+     beautiful formulas, but the most useful was missed by Ramanujan and
+     discovered by the Chudnovsky's. It is the following (slightly modified
+     for ease of programming):
+<P>
+     Set <I>k_1 = 545140134;</i> <I>k_2 = 13591409;</i> <I>k_3 = 640320;</i> <I>k_4 = 100100025;</i>
+     <I>k_5 = 327843840;</i> <I>k_6 = 53360;</i>
+<P>
+     Then <I>pi = (k_6 sqrt(k_3))/(S)</i>, where
+<P>
+     <p><I>S = sum_(n = 0)^oo (-1)^n ((6n)!(k_2 + nk_1))/(n!^3(3n)!(8k_4k_5)^n)</i><p>
+<P>
+     The great advantages of this formula are that
+<P>
+     1) It converges linearly, but very fast (more than 14 decimal digits per
+     term).
+<P>
+     2) The way it is written, all operations to compute S can be programmed
+     very simply. This is why the constant <I>8k_4k_5</i> appearing in the
+     denominator has been written this way instead of 262537412640768000.
+     This is how the Chudnovsky's have computed several billion decimals.
+<P>
+</OL>
+<P>
+An interesting new method was recently proposed by David Bailey, 
+Peter Borwein and 
+Simon Plouffe. It can compute the <i>N</i>th  <B>hexadecimal</B> digit of Pi
+efficiently without the previous <i>N-1</i> digits. The method is based
+on the formula:
+<P>
+<p><I>pi = sum_(i = 0)^oo (1 16^i) ((4 8i + 1) - (2 8i + 4) - (1 8i + 5) - (1 8i + 6))</i><p>
+<P>
+in <i>O(N)</i> time and <i>O(log N)</i> space. (See references.)
+<P>
+     The
+     following 160 character C program, written by Dik T. Winter at CWI,
+     computes <I>pi </i> to 800 decimal digits.
+<P>
+     <PRE>     int a=10000,b,c=2800,d,e,f[2801],g;main(){for(;b-c;)f[b++]=a/5;
+     for(;d=0,g=c*2;c-=14,printf(&quot;%.4d&quot;,e+d/a),e=d%a)for(b=c;d+=f[b]*a,
+     f[b]=d%--g,d/=g--,--b;d*=b);}
+</PRE>
+<P>
+<P><B>References</B> <P>
+<P>
+    <I>P. B. Borwein, and D. H. Bailey.</I> <B>Ramanujan, Modular Equations,
+    and Approximations to <I>pi </i></B> <I>American Mathematical
+    Monthly,</I> vol. 96, no. 3 (March 1989), p. 201-220.
+<P>
+<P>
+    <I>D. H. Bailey, P. B. Borwein, and S. Plouffe.</I> <B>A New Formula for 
+    Picking off Pieces of Pi,</B> <I>Science News,</I> v 148, p 279 (Oct 28, 1995).
+    also at <code> http://www.cecm.sfu.ca/~pborwein </code>
+<P>
+<P>
+    <I>J.M. Borwein and P.B. Borwein.</I> <B>The arithmetic-geometric mean and fast computation of elementary
+    functions.</B> <I>SIAM Review,</I> Vol. 26, 1984, pp. 351-366.
+<P>
+<P>
+    <I>J.M. Borwein and P.B. Borwein.</I> <B>More quadratically converging algorithms for <I>pi </i>.</B> <I>Mathematics of Computation,</I> Vol. 46, 1986, pp. 247-253.
+<P>
+<P>
+   <I>Shlomo Breuer and Gideon Zwas</I> <B>Mathematical-educational aspects of the computation of <I>pi </i></B> <I>Int. J. Math. Educ. Sci. Technol.,</I> Vol. 15, No. 2, 1984,
+    pp. 231-244.
+<P>
+<P>
+    <I>David Chudnovsky and Gregory Chudnovsky.</I> <B>The computation of classical constants.</B> <I>Columbia University,
+    Proc. Natl. Acad. Sci. USA,</I> Vol. 86, 1989.
+<P>
+<P>
+    <I>Classical Constants and Functions: Computations and Continued
+    Fraction Expansions</I> <I>D.V.Chudnovsky, G.V.Chudnovsky, H.Cohn, M.B.Nathanson, eds.</I> Number Theory, New York Seminar 1989-1990.
+<P>
+<P>
+    <I>Y. Kanada and Y. Tamura.</I> <B>Calculation of <I>pi </i> to 10,013,395 decimal places based on the
+    Gauss-Legendre algorithm and Gauss arctangent relation.</B> <I>Computer Centre, University of Tokyo,</I> 1983.
+<P>
+<P>
+    <I>Morris Newman and Daniel Shanks.</I> <B>On a sequence arising in series for <I>pi </i>.</B> <I>Mathematics of computation,</I> Vol. 42, No. 165, Jan 1984,
+    pp. 199-217.
+<P>
+<P>
+    <I>E. Salamin.</I> <B>Computation of <I>pi </i> using arithmetic-geometric mean.</B> <I>Mathematics of Computation,</I> Vol. 30, 1976, pp. 565-570
+<P>
+<P>
+    <I>David Singmaster.</I> <B>The legal values of <I>pi </i>.</B> <I>The Mathematical Intelligencer,</I> Vol. 7, No. 2, 1985.
+<P>
+<P>
+    <I>Stan Wagon.</I> <B>Is <I>pi </i> normal?</B> <I>The Mathematical Intelligencer,</I> Vol. 7, No. 3, 1985.
+<P>
+<P>
+<P>
+<P>
+    <I>A history of <I>pi </i>.</I> <I>P. Beckman.</I> Golem Press, CO, 1971 (fourth edition 1977)
+<P>
+<P>
+    <I><I>pi </i> and the AGM - a study in analytic number theory and
+    computational complexity.</I> <I>J.M. Borwein and P.B. Borwein.</I> Wiley, New York, 1987.
+<P>
+<P>
+<HR><A NAME="tex2html264" HREF="node13.html"><IMG ALIGN=BOTTOM ALT="next" SRC="http://usg.uwaterloo.ca/Icons/latex2html.95/icons/next_motif.gif"></A> <A NAME="tex2html262" HREF="node11.html"><IMG ALIGN=BOTTOM ALT="up" SRC="http://usg.uwaterloo.ca/Icons/latex2html.95/icons/up_motif.gif"></A> <A NAME="tex2html256" HREF="node11.html"><IMG ALIGN=BOTTOM ALT="previous" SRC="http://usg.uwaterloo.ca/Icons/latex2html.95/icons/previous_motif.gif"></A> <A NAME="tex2html266" HREF="node1.html"><IMG ALIGN=BOTTOM ALT="contents" SRC="http://usg.uwaterloo.ca/Icons/latex2html.95/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html265" HREF="node13.html">Euler's formula: <I>e^(i pi) </A>
+<B>Up:</B> <A NAME="tex2html263" HREF="node11.html">Special Numbers and Functions</A>
+<B> Previous:</B> <A NAME="tex2html257" HREF="node11.html">Special Numbers and Functions</A>
+<BR> <HR>
+<P><ADDRESS>
+<I>Alex Lopez-Ortiz <BR>
+Sat Jan  6 22:47:26 EST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

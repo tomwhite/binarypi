@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html><head><title>Number Theory. Pi</title></head><body>
+	
+	
+		<h1>Calculating the <i>n</i>th binary digit of pi</h1>
+
+		<p>
+		Calculating the <i>n</i>th binary digit of pi is possible without having to know 
+		the previous digits, amazingly enough, and there is a	wonderful formula for it!
+		The original papers can be found at
+		<a href="http://www.cecm.sfu.ca/~pborwein">Peter Borwein's site</a>.
+		I used material from <i>On the Rapid Computation of Various Polylogarithmic Constants</i>,
+		by David Bailey, Peter Borwein and Simon Plouffe
+		to write my program. Download it in
+		<a href="http://www.cecm.sfu.ca/~pborwein/PAPERS/P123.ps">PostScript</a> or
+		<a href="http://www.cecm.sfu.ca/~pborwein/PAPERS/P123.pdf">PDF</a> format.
+		</p>
+		
+		<p>
+		You can find the binary expansion (32768 digits) on
+		<a href="http://www.algonet.se/~eliasb/pi/binpi.html">this web page</a>.
+		The same data is in a <a href="pi2.txt">text file</a> for easy processing.
+		You can also get an up-to-date check on the status of <i>n</i>th binary digit
+		calculation <a href="http://www.lacim.uqam.ca/pi/records.html#nthdigit">records</a>.
+		There's even a <a href="http://www.cecm.sfu.ca/projects/pihex/">distributed</a>
+		effort to calculate binary digits of pi.
+		</p>
+		
+		<p>
+		My program is a Java implementation of Bailey, Borwein and Plouffe's algorithm to
+		calculate the <i>n</i>th binary digit of pi. Currently the code runs only as
+		command line applications. You can browse the
+		<a href="docs/api/index.html">JavaDoc</a> online, or download <a href="pi.zip">the code</a>.
+		</p>
+		
+		<p>
+		Here are some of my results: 
+		</p>
+		
+		<p>
+		<table>
+		<tr>
+		<th>Binary position</th>
+		<th>Binary digit</th>
+		</tr>
+		<tr>
+		<td>10<sup>0</sup></td>
+		<td>0</td>
+		</tr>
+		<tr>
+		<td>10<sup>1</sup></td>
+		<td>0</td>
+		</tr>
+		<tr>
+		<td>10<sup>2</sup></td>
+		<td>0</td>
+		</tr>
+		<tr>
+		<td>10<sup>3</sup></td>
+		<td>1</td>
+		</tr>
+		<tr>
+		<td>10<sup>4</sup></td>
+		<td>1</td>
+		</tr>
+		<tr>
+		<td>10<sup>5</sup></td>
+		<td>0</td>
+		</tr>
+		<tr>
+		<td>10<sup>6</sup></td>
+		<td>1</td>
+		</tr>
+		<tr>
+		<td>10<sup>7</sup></td>
+		<td>1</td>
+		</tr>
+		<tr>
+		<td>10<sup>8</sup></td>
+		<td>0</td>
+		</tr>
+		</table> 
+		</p>
+		
+		<h1>The first million decimal digits of pi</h1>
+		
+		<p>
+		Can't be bothered to calculate? Or need an independent check? Here's a
+		<a href="pimil10.txt">text file</a> from The Project Gutenberg
+		containing the first million decimal digits of pi.
+		</p>
+		
+		<h1>Pi squared</h1>
+
+		<p>
+		For the ultimate pi resource, here's the <a href="http://www.joyofpi.com/">joy of pi</a>.
+		</p>
+		
+	
+</body></html>
